@@ -94,15 +94,18 @@ let getContent = () => {
         type: "GET",
         dataType: "html",
         contentType: "text/html"
+    }).fail(() => {
+        $("#editcontent,#content").append("<p class='alert alert-warning'>Failed to load the content.</p>");
     }).done(d => {
         let str = window.location.href;
-        if (str.indexOf("edit") != -1 || str.indexOf("create") != -1) {
+        if (str.indexOf("edit") != -1) {
             activateSummernote(d);
         } else {
             $("#editcontent,#content").append(d);
         }
+    }).always(()=>{
+        $("#progressGet").css("display", "none");
     });
-    $("#progressGet").css("display", "none");
 }
 let post = () => {
     let d = getData();
@@ -115,7 +118,8 @@ let post = () => {
         data: d,
         processData: false,
         contentType: false
-    }).done( r => {
+    }).done(r => {
+        if (r!=="error"){
             let iD = String(r[0]);
             let token = String(r[1]);
             $("#edit_link").click(() => {
@@ -125,18 +129,23 @@ let post = () => {
                 jump_post(iD);
             });
             $("#token").val(token)
+            $("#input_file,#post_button").attr("disabled", true);
+            $("#msg").css("visibility", "visible");
+            setTimeout(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 10);
+            document.querySelector("#token").select();
+            setTimeout(() => {
+                document.execCommand("copy");
+            }, 10);
+        }else{
+            $("#err").append("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
         }
-        );
+    }).fail(() => {
+        $("#err").append("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
+    }).always(()=>{
         $("#progress").css("visibility", "hidden");
-        $("#input_file,#post_button").attr("disabled", true);
-        $("#msg").css("visibility", "visible");
-        setTimeout(() => {
-            window.scrollTo(0, document.body.scrollHeight);
-        }, 10);
-        document.querySelector("#token").select();
-        setTimeout(() => {
-            document.execCommand("copy");
-        }, 10);
+    });
 }
 let update = () => {
     let d = getData();
@@ -150,16 +159,23 @@ let update = () => {
         processData: false,
         contentType: false
     }).done(r => {
+        if(r !=="error"){
             alert(r);
+            $("#progress").css("visibility", "hidden");
+            $("#update_button").attr("disabled", true);
+            setTimeout(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 10);
+            let iD = getId();
+            window.location.href = "/posts/" + iD;
+        }else{
+            $("#err").append("<p class='alert alert-warning'>Failed to update. Try later.</p>")
         }
-    );
-    $("#progress").css("visibility", "hidden");
-    $("#update_button").attr("disabled", true);
-    setTimeout(() => {
-        window.scrollTo(0, document.body.scrollHeight);
-    }, 10);
-    let iD = getId();
-    window.location.href = "/posts/" + iD;
+    }).fail(()=>{
+        $("#err").append("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
+    }).always(()=>{
+        $("#progress").css("visibility", "hidden");
+    });
 }
 let deletePost = () => {
     let iD = getId();
@@ -168,9 +184,13 @@ let deletePost = () => {
         "token": token
     };
     $.post("/posts/" + iD + "/delete/", data).done(r => {
-            alert(r);
-        }
-        );
+            if(r !== "error"){
+                alert(r);
+            }else{
+                $("#err").append("<p class='alert alert-warning'>Failed to delete. Try later.</p>")
+                return 1;
+            }
+    });
     window.location.href = "/posts/";
     $("#delete_button").attr("disabled", true);
 }
@@ -224,9 +244,9 @@ let jump_post = iD => {
 }
 $(document).ready(() => {
     let str = window.location.href;
-    if (str.indexOf("create") === -1) { //When the page is loaded as edit or preview.
-        getContent(); // Fetch the content and activate summernote.
-    }else{
+    if (str.indexOf("create") === -1) { // When the page is loaded as edit or preview.
+        getContent();                   // Fetch content and activate summernote.
+    }else{                              // When the page is loaded to create a page.
         activateSummernote();
     };
     if ('serviceWorker' in navigator) {

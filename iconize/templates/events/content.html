@@ -1,6 +1,5 @@
 # extends 'base.html'
 # block head:
-    <link href="{{ url_for('static',filename='bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static',filename='summernote.css') }}" rel="stylesheet">
 # endblock
 # block title:
@@ -53,6 +52,7 @@
             <a class="btn btn-danger" id="delete_button" href="javascript:void(0);">DELETE</a>
         # endif
         <progress id="progress" value="0"></progress>
+        <div id="err"></div>
         <div id="msg">
             <p class="alert alert-success">Created the page successfully!</p>
             <p class="r-button"><a class="btn btn-primary" id="jump_post" href="javascript:void(0);">View the page</a></p>

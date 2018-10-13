@@ -11,7 +11,9 @@ attbs.update(added_attrbt)
 tags = bleach.sanitizer.ALLOWED_TAGS + added_tags
 
 
-def cl(html):
+def cl(data):
+    html = data.read()
+    html = html.decode("utf-8")
     cleaned = bleach.clean(html, tags=tags, attributes=attbs,
                           styles=styles, protocols=protocols)
     return cleaned

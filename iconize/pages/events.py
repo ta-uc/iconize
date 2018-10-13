@@ -24,27 +24,24 @@ def list_posts():
 @bp.route('/create/', methods=['GET', 'POST'])
 def create_post():
     if request.method == 'POST':
-
-        title = request.form["title"]
-        s_title = request.form["s_title"]
-        if s_title == "":
-            s_title = title
-        data = request.files["code"]
-        html = data.read()
-        html = html.decode("utf-8")
-        cleaned_html = cl(html)
-        returnValue = getHash(html)
-        iD = returnValue[0]
-        token = returnValue[1]
-        add_post(iD, request.form['author'], cleaned_html,
-                 request.form['title'], s_title,
-                 request.form['color'], request.form['date'], token)
-        if "iconfile" in request.files:
-            saveFile(icon=request.files["iconfile"], name=iD)
-        return jsonify(returnValue)
-
-    access_type = "Create"
-    return render_template('/events/content.html', access_type=access_type)
+        try:
+            title = request.form["title"]
+            s_title = request.form["s_title"]
+            if s_title == "":
+                s_title = title
+            cleaned_html = cl(request.files["code"])
+            returnValue = getHash(cleaned_html)
+            iD = returnValue[0]
+            token = returnValue[1]
+            add_post(iD, request.form['author'], cleaned_html,
+                    title, s_title,
+                    request.form['color'], request.form['date'], token)
+            if "iconfile" in request.files:
+                saveFile(icon=request.files["iconfile"], name=iD)
+            return jsonify(returnValue)
+        except:
+            return "error"
+    return render_template('/events/content.html', access_type="Create")
 
 
 @bp.route('/<iD>/edit/', methods=['GET', 'POST'])
@@ -64,12 +61,9 @@ def edit_post(iD):
                 deleteFile(iD)
             if "iconfile" in request.files:
                 saveFile(icon=request.files["iconfile"], name=iD)
-            data = request.files["code"]
-            html = data.read()
-            html = html.decode("utf-8")
-            cleaned_html = cl(html)
+            cleaned_html = cl(request.files["code"])
             mod_post(iD, request.form['author'], cleaned_html,
-                     request.form['title'], s_title,
+                     title, s_title,
                      request.form['color'], request.form['date'])
         except:
             return 'error'
@@ -77,21 +71,20 @@ def edit_post(iD):
 
     if request.method == 'GET':
         if request.args.get('token') == '' or request.args.get('token') is None:
-            return render_template('events/content.html', auth='missing', html='')
+            return render_template('events/content.html', auth='missing')
         if request.args.get('token') != token:
-            return render_template('events/content.html', auth='incorrect', html='')
+            return render_template('events/content.html', auth='incorrect')
         post = get_post(iD)
-        access_type = "Edit"
-        return render_template('events/content.html', access_type=access_type,
-                               author=post['author'], auth='success', title=post['title'],
-                               s_title=post['s_title'], date=post['date'], color=post['color'])
+        return render_template('events/content.html', access_type="Edit",
+                               author=post.author, auth='success', title=post.title,
+                               s_title=post.s_title, date=post.date, color=post.color)
 
 
 @bp.route('/<iD>/', methods=['GET'])
 def show_post(iD=None):
     post = get_post(iD)
     if post is None:
-        return "This page doesn't exist or the page iD is incorrect."
+        return render_template("events/error.html")
     return render_template('/events/show_post.html', title=post.title, iD=iD,
                            date=post.date, author=post.author, s_title=post.s_title, color=post.color)
 
@@ -110,6 +103,8 @@ def delete(iD):
 
         if request.form["token"] == "" or request.form["token"] is None or token != request.form["token"]:
             return "error"
-
-        delete_post(iD)
+        try:
+            delete_post(iD)
+        except:
+            return "error"
         return "Success"

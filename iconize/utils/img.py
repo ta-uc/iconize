@@ -7,7 +7,8 @@ s = (1024, 1024)
 c = (255, 255, 255, 0)
 f = ImageFont.truetype(dirc+'/font/NotoSansMonoCJKjp-Bold.otf', 460)
 m = 'RGBA'
-
+x = 55
+y = -110
 
 def strByteCount(text):
     for c in text:
@@ -30,7 +31,17 @@ def createImg(txt, size=512, color=(0, 0, 0, 255)):
     new_txt = ''.join(slist)
     img = Image.new(m, s, c)
     draw = ImageDraw.Draw(img)
-    draw.multiline_text((55, -110), new_txt, spacing=-40, fill=color, font=f)
+    if color == "#FFF":
+        draw.text((x-7, y), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.text((x+7, y), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.text((x, y-7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.text((x, y+7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.text((x-7, y-7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.text((x+7, y-7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.text((x-7, y+7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.text((x+7, y+7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+    draw.text((x, y), new_txt, spacing=-40, fill=color, font=f)
+    # draw.multiline_text((55, -110), new_txt, spacing=-40, fill=color, font=f)
     resizedimg = img.resize((size, size), Image.ANTIALIAS)
     return resizedimg
 
@@ -42,5 +53,5 @@ def make512(img):
 
 
 if __name__ == "__main__":
-    img = createImg('ICONIZER', size=512, color="#00BFFF")
+    img = createImg('あいうえおかき', size=512, color="#123456")
     img.show()

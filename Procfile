@@ -1,1 +1,1 @@
-web: gunicorn -c gconfig.py index:app
+web: gunicorn -c gconfig.py start:app

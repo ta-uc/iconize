@@ -7,3 +7,5 @@ gunicorn
 bleach
 pillow
 Flask-SSLify
+flask-sqlalchemy
+psycopg2-binary

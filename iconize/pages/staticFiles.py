@@ -1,5 +1,5 @@
 from flask import (
-    make_response, Blueprint, url_for, jsonify,current_app
+    make_response, Blueprint, url_for, jsonify,current_app,send_file
 )
 import io
 import os
@@ -60,14 +60,21 @@ def sw():
     return res
 
 
+# @bp.route("/favicon.ico")
+# def favicon():
+#     res = make_response()
+#     path = current_app.root_path + "/static/favicon.ico"
+#     with open(path) as ico:
+#         res.data = ico
+#     fileName = "favicon.ico"
+#     res.headers['Content-Disposition'] = 'filename=' + fileName
+#     res.headers["Content-Type"] = "image/x-icon"
+#     return res
+
 @bp.route("/favicon.ico")
 def favicon():
-    res = make_response()
-    res.data = open('static/favicon.ico', 'rb').read()
-    fileName = "favicon.ico"
-    res.headers['Content-Disposition'] = 'filename=' + fileName
-    res.headers["Content-Type"] = "image/x-icon"
-    return res
+    path = current_app.root_path + "/static/favicon.ico"
+    return send_file(path)
 
 
 @bp.route('/posts/<iD>/manifest.json')
