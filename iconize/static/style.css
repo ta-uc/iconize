@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@media screen and (min-width:0px) {
+    body {
+        width: 90vw;
+        margin-top: 5vh;
+        margin-left: 5vw;
+        margin-right: 5vw;
+        margin-bottom: 5vh;
+    }
+}
+
+@media screen and (min-width:400px) {
+    body {
+        width: 60vw;
+        margin-top: 5vh;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+/* a {
+    text-decoration: none;
+    color: #313131;
+} */
+
+img{
+    max-width :100%;
+	max-height: 100%;
+	object-fit: cover;
+}
+
+.r-button a,
+p#create_link a,
+#subm_button,
+#jump_post,
+#edit_link,
+#delete_button,
+#update_button,
+#token_button
+    {
+    padding: 2px;
+}
+
+/* p {
+    margin-bottom: 1px;
+} */
+
+input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 5px;
+}
+
+label {
+    width: 100%
+}
+
+hr {
+    margin: 3px 0 3px 0;
+}
+
+#meta {
+    word-wrap: break-word;
+}
+
+#content {
+    padding: 5px;
+    margin: 5px;
+    margin-bottom: 5vh;
+    word-wrap: break-word;
+}
+
+#contentedit,
+.note-editor {
+    border: 1px solid rgb(200, 200, 200);
+    padding: 5px;
+    margin: 5px;
+    word-wrap: break-word;
+}
+
+#input_token,
+token {
+    width: 70%;
+    border-bottom: 1px solid rgb(126, 126, 126);
+    padding-bottom: 0px;
+    margin-right: 3px;
+}
+
+#del_icon {
+    margin-left: 3px;
+    width: 15px;
+}
+
+#input_author,
+#author {
+    font-size: 1.5em;
+    height: 20px;
+}
+
+#input_title,
+#title {
+    font-size: 2em;
+}
+
+#input_sort_title {
+    font-size: 1em;
+    float: left;
+}
+
+#input_date,
+#date {
+    height: 25px;
+    width: 150px;
+}
+
+#input_color {
+    width: 100px;
+}
+
+.r-button, 
+#create_link {
+    width:100%;
+    text-align: right;
+}
+#msg,#progress,#progress{
+    width:100%;
+    visibility: hidden;
+}
+#progressGet{
+    width:100%;
+    display: none;
+}
+
+

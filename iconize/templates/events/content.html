@@ -1,0 +1,75 @@
+# extends 'base.html'
+# block head:
+    <link href="{{ url_for('static',filename='bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='summernote.css') }}" rel="stylesheet">
+# endblock
+# block title:
+    # if auth == 'missing' or auth == 'incorrect':
+        Token {{ auth }}.
+    # else
+        {{ access_type }} - page
+    # endif
+# endblock
+# block content
+    # if access_type == 'Edit' and auth == 'success' or access_type == 'Create':
+        <form>
+            <input id="input_author" type="text" maxlength="10" placeholder="Author" value="{{ author }}"
+            data-toggle="tooltip" title='"Author" cannot be empty.' data-placement="bottom">
+            <input id="input_title" type="text" maxlength="30" placeholder="Title" value="{{ title }}"
+            data-toggle="tooltip" title='"Title" cannot be empty.' data-placement="bottom">
+            <input maxlength="8" id="input_short_title" type="text" placeholder="String for icon." value="{{ s_title }}">
+            date:<input id="input_date" type="date" value="{{ date }}"
+            data-toggle="tooltip" title='"Date" cannot be empty.' data-placement="bottom">
+        </form>
+        <progress id="progressGet"></progress>
+        <div id="wrap-editor" data-toggle="tooltip" title='"Content" cannot be empty.' data-placement="bottom">
+        <div id="editcontent"></div>
+        </div>
+        <p><label data-toggle="tooltip" title='Invalid color code.' data-placement="bottom"> Theme Color 
+            <input id="input_color" type="text" value="#{{ color }}" list="colors"></label></p>
+        <datalist id="colors">
+                <option value="#FFFFFF">White</option>
+                <option value="#000000">Black</option>
+                <option value="#808080">Gray</option>
+                <option value="#ff0000">Red</option>
+                <option value="#ffa500">Orange</option>
+                <option value="#ffff00">Yellow</option>
+                <option value="#32CD32">Lime green</option>
+                <option value="#008000">Green</option>
+                <option value="#00ffff">Cyan</option>
+                <option value="#87CEEB">Sky blue</option>
+                <option value="#0000ff">Blue</option>
+                <option value="#800080">Purple</option>
+                <option value="#FF00FF">Magenta</option>
+                <option value="#FFC0CB">Pink</option>
+        </datalist>
+        <p><label>Icon image file (Only png ~512kb) <input id="input_file" type="file" accept="image/png"></label></p>
+        # if access_type == 'Create':
+            <p class="r-button"><a class="btn btn-primary" id="post_button" href="javascript:void(0);">POST</a></p>
+        # endif
+        # if access_type == 'Edit' and auth == 'success':
+            <label>Delete Icon file<input id="del_icon"type="checkbox"></label>
+            <a class="btn btn-primary" id="update_button" href="javascript:void(0);">UPDATE</a>
+            <a class="btn btn-danger" id="delete_button" href="javascript:void(0);">DELETE</a>
+        # endif
+        <progress id="progress" value="0"></progress>
+        <div id="msg">
+            <p class="alert alert-success">Created the page successfully!</p>
+            <p class="r-button"><a class="btn btn-primary" id="jump_post" href="javascript:void(0);">View the page</a></p>
+            <p>This is the token for your page:</p>
+            <input id="token">
+            <p class="r-button"><a class="btn btn-primary" id="edit_link" href="javascript:void(0);" >Edit the page</a></p>
+        </div>
+    # endif
+    # if (auth == 'missing' or auth == 'incorrect') and access_type != 'Create':
+        <p><b>Token {{ auth }} enter below.</b></p>
+        <input type="text" id="input_token"><a class="btn btn-primary" id="token_button" href="javascript:void(0);">SEND</a>
+    # endif
+# endblock
+# block script:
+<script defer src="{{ url_for('static',filename='jquery.js') }}"></script>
+<script defer src="{{ url_for('static',filename='popper.min.js') }}"></script>
+<script defer src="{{ url_for('static',filename='bootstrap.js') }}"></script>
+<script defer src="{{ url_for('static',filename='summernote.js') }}"></script>
+<script defer src="{{ url_for('static',filename='main.js') }}"></script>
+# endblock

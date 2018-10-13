@@ -1,0 +1,27 @@
+# extends 'base.html'
+
+# block head
+<link href="{{ url_for('static',filename='bootstrap.css') }}" rel="stylesheet">
+<link rel="manifest" href="/posts/{{ iD }}/manifest.json">
+# endblock
+
+# block content
+<div id="meta">
+	<div id="author">{{ author }}</div>
+	<div id="title">{% block title %}{{ title }}{% endblock%}</div>
+	<div id="date">{{ date }}</div>
+</div>
+<progress id="progressGet"></progress>
+<div id="content">
+</div>
+<div class="r-button"><a class="btn btn-default" id="edit_link" href="./edit/">Edit</a></div>
+# endblock
+
+# block script:
+	<script defer src="{{ url_for('static',filename='jquery.js') }}"></script>
+	<script defer src="{{ url_for('static',filename='popper.min.js') }}"></script>
+	<script defer src="{{ url_for('static',filename='bootstrap.js') }}"></script>
+	<script defer src="{{ url_for('static',filename='summernote.js') }}"></script>
+	<script defer src="{{ url_for('static',filename='main.js') }}"></script>
+	<script async src="{{ url_for('static',filename='pwacompat.min.js')}}"></script>
+# endblock

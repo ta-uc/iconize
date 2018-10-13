@@ -1,0 +1,14 @@
+# extends 'base.html'
+# block head:
+    <link href="{{ url_for('static',filename='bootstrap.css') }}" rel="stylesheet">
+# endblock
+# block title
+List of pages
+# endblock
+# block content
+    <h1>The latest 10 posts</h1>
+    # for i in range(num)
+        <p> <a href="/posts/{{ posts[i]['iD'] }}">{{ posts[i]['title'] }} - {{ posts[i]['author'] }}</a></p>
+    # endfor
+    <hr><p id="create_link"><a class="btn btn-primary" href="/posts/create/">Create page</a></p>
+# endblock
