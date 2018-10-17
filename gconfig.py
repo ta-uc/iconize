@@ -1,6 +1,6 @@
 import multiprocessing
 import os
-mem_mb = os.getenv("MEM_SIZE", os.sysconf('SC_PAGE_SIZE') * os.sysconf('SC_PHYS_PAGES') / 1024 **2)
+mem_mb = int(os.getenv("MEM_SIZE", os.sysconf('SC_PAGE_SIZE') * os.sysconf('SC_PHYS_PAGES') / 1024 **2))
 w = multiprocessing.cpu_count() * 2 + 1
 each_mem = 70
 need_mem = w * each_mem
