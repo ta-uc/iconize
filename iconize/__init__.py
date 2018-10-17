@@ -1,10 +1,11 @@
-from flask import Flask,redirect,url_for
+from flask import Flask,redirect,url_for,render_template
 import os
 def create_app():
+    #pylint: disable=W0612
     app = Flask(__name__)
     app.config["ENV"] = os.getenv("ICZ_ENV","development")
     app.config["DEBUG"] = os.getenv("ICZ_DEBUG",1)
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("ICZ_DB","sqlite:///.data/data.db")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL","sqlite:///.data/data.db")
     app.config["SQLALCHEMY_COMMIT_ON_TEARDOWN"] = True
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 32
@@ -21,8 +22,12 @@ def create_app():
     from . import db
     db.init_db(app)
 
-    @app.route('/')
+    @app.route("/")
     def index():
         return redirect(url_for('events.list_posts'))
+
+    @app.errorhandler(404)
+    def page_not_found(err):
+        return render_template('/err/404.html'), 404
 
     return app
