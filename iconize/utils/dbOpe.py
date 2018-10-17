@@ -35,7 +35,7 @@ def add_post(iD=None, author=None, html=None, title=None,
     post.s_title = s_title
     post.color = color
     post.date = date
-    post.token = token.encode()
+    post.token = token
     db.session.add(post)
     db.session.commit()
 

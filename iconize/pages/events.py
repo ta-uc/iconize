@@ -49,7 +49,7 @@ def edit_post(iD):
     token_data = get_post(iD)
     if token_data is None:
         return redirect('/')
-    token = token_data.token.decode("utf-8")
+    token = token_data.token
     if request.method == 'POST':
         try:
             title = request.form["title"]
