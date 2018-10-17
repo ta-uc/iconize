@@ -86,7 +86,7 @@ def manifest(iD=None):
         "background_color": "#FFF",
         "display": "standalone",
         "orientation": "portrait",
-        "scope": "/posts/",
+        "scope": "/posts/"+iD+"/",
         "start_url": "/posts/" + iD + "/",
         "icons": [
             {"src": '/posts/'+iD+'/512.png',
