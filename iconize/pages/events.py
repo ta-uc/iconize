@@ -49,8 +49,7 @@ def edit_post(iD):
     token_data = get_post(iD)
     if token_data is None:
         return redirect('/')
-    token = token_data.token
-
+    token = token_data.token.decode("utf-8")
     if request.method == 'POST':
         try:
             title = request.form["title"]
@@ -89,11 +88,11 @@ def show_post(iD=None):
                            date=post.date, author=post.author, s_title=post.s_title, color=post.color)
 
 
-@bp.route('/<iD>/delete/', methods=['GET', 'POST'])
+@bp.route("/<iD>/delete/", methods=["GET", "POST"])
 def delete(iD):
-    if request.method == 'GET':
-        return redirect('/')
-    if request.method == 'POST':
+    if request.method == "GET":
+        return redirect("/")
+    if request.method == "POST":
         token_data = get_post(iD)
 
         if token_data == "" or token_data is None:
@@ -108,3 +107,7 @@ def delete(iD):
         except:
             return "error"
         return "Success"
+
+@bp.route("/<iD>/offlineErr/")
+def offline(iD):
+    return render_template("/offline/offline.html")

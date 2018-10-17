@@ -1,3 +1,4 @@
+"use strict";
 let downKeyCode = null;
 let getParam = (name, url) => {
     url = location.search;
@@ -90,7 +91,7 @@ let getContent = () => {
     $("#progressGet").css("display", "inline");
     $.ajax({
         xhr: xhrSetting,
-        url: "/" + iD + "/content/",
+        url: "/posts/" + iD + "/content/",
         type: "GET",
         dataType: "html",
         contentType: "text/html"
@@ -244,24 +245,30 @@ let jump_post = iD => {
 }
 $(document).ready(() => {
     let str = window.location.href;
-    if (str.indexOf("create") === -1) { // When the page is loaded as edit or preview.
+    if (str.indexOf("create") === -1) { // When the page is loaded as edit mode or view.
         getContent();                   // Fetch content and activate summernote.
-    }else{                              // When the page is loaded to create a page.
+    }else{                              // When the page is loaded as create mode.
         activateSummernote();
     };
-    if ('serviceWorker' in navigator) {
+    // When the page is loaded as view. Register the sw for each post.
+    if ('serviceWorker' in navigator && (str.indexOf("create") === -1 &&
+        str.indexOf("edit") === -1)) {
+        const iD = getId();
         navigator.serviceWorker
-            .register("/service-worker.js", {
-                scope: "/"
+            .register("/posts/"+iD+"/service-worker.js", {
+                scope: "/posts/"+iD+"/"
             })
             .then(() => {
                 console.log('Service Worker Registered');
             });
     }
-    $("input:first").focus();
-    let color = $("#input_color").val();
-    $("#input_color").css("background-color", color);
-    $('[data-toggle="tooltip"]').tooltip().tooltip("disable");
+    // When the page is loaded as create mode or edit mode.
+    if (str.indexOf("create") !== -1 || str.indexOf("edit") !== -1){
+        $("input:first").focus();
+        let color = $("#input_color").val();
+        $("#input_color").css("background-color", color);
+        $('[data-toggle="tooltip"]').tooltip().tooltip("disable");
+    }
 });
 $("#post_button").click(post);
 $("#update_button").click(update);
@@ -279,22 +286,18 @@ $("input").on("keydown", e => {
 $("#input_token").on("keyup", e => {
     if (e.which === 13) sendToken();
 })
-$("#input_color").click(() => {
-    $("#input_color").val("");
-});
-$("#input_color").change(() => {
-    let color = $("#input_color").val();
-    $("#input_color").css("background-color", color);
-});
 $("#input_date").change(() => {
     $("#editcontent").summernote({
         focus: true
-    })
+    });
 });
-$("#input_color").change(() => {
-    let color = $("#input_color").val();
-    $("#input_color").css("background-color", color);
+$("#input_color").click(function() {
+    $(this).val("");
+    $(this).css("background-color", "#FFF");
 });
-$("#input_author,#input_title,#input_date,#input_color,#wrap-editor").on("keypress click", function () {
+$("#input_color").change(function() {
+    $(this).css("background-color", $(this).val());
+});
+$("#input_author,#input_title,#input_date,#input_color,#wrap-editor").on("keypress click", function() {
     $(this).css("border", "none").tooltip("hide").tooltip("disable");
 });

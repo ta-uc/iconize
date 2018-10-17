@@ -51,5 +51,6 @@ def mod_post(iD, author=None, html=None, title=None,
     post.color = color if color is not None else post.color
     post.date = date if date is not None else post.date
     post.icon = icon if icon is not None else post.icon
+    post.ver += 1
     db.session.add(post)
     db.session.commit()

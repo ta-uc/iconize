@@ -1,11 +1,12 @@
 # extends 'base.html'
 
 # block head
-<link href="{{ url_for('static',filename='bootstrap.css') }}" rel="stylesheet">
+<link href="/posts/{{ iD }}/static/bootstrap.css" rel="stylesheet">
+<link href="/posts/{{ iD }}/static/style.css" rel="stylesheet">
 <link rel="manifest" href="/posts/{{ iD }}/manifest.json">
 # endblock
 # block favicon
-<link rel="shortcut icon" type="image/png" href="/{{ iD }}/128.png">
+<link rel="shortcut icon" type="image/png" href="/posts/{{ iD }}/128.png">
 # endblock
 
 # block content
@@ -21,10 +22,8 @@
 # endblock
 
 # block script:
-	<script defer src="{{ url_for('static',filename='jquery.js') }}"></script>
-	<script defer src="{{ url_for('static',filename='popper.min.js') }}"></script>
-	<script defer src="{{ url_for('static',filename='bootstrap.js') }}"></script>
-	<script defer src="{{ url_for('static',filename='summernote.js') }}"></script>
-	<script defer src="{{ url_for('static',filename='main.js') }}"></script>
-	<script async src="{{ url_for('static',filename='pwacompat.min.js')}}"></script>
+	<script defer src="/posts/{{ iD }}/static/jquery.js"></script>
+	<script defer src="/posts/{{ iD }}/static/popper.min.js"></script>
+	<script defer src="/posts/{{ iD }}/static/main.js"></script>
+	<script async src="/posts/{{ iD }}/static/pwacompat.min.js"></script>
 # endblock

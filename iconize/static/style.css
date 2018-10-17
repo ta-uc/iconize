@@ -92,7 +92,7 @@ token {
 #input_author,
 #author {
     font-size: 1.5em;
-    height: 20px;
+    /* height: 20px; */
 }
 
 #input_title,

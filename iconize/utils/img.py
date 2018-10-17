@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 import unicodedata
-
+import io
 import os
 dirc = os.path.dirname(os.path.abspath(__file__))
 s = (1024, 1024)
@@ -31,19 +31,22 @@ def createImg(txt, size=512, color=(0, 0, 0, 255)):
     new_txt = ''.join(slist)
     img = Image.new(m, s, c)
     draw = ImageDraw.Draw(img)
-    if color == "#FFF":
-        draw.text((x-7, y), new_txt, spacing=-40, fill=(0,0,0), font=f)
-        draw.text((x+7, y), new_txt, spacing=-40, fill=(0,0,0), font=f)
-        draw.text((x, y-7), new_txt, spacing=-40, fill=(0,0,0), font=f)
-        draw.text((x, y+7), new_txt, spacing=-40, fill=(0,0,0), font=f)
-        draw.text((x-7, y-7), new_txt, spacing=-40, fill=(0,0,0), font=f)
-        draw.text((x+7, y-7), new_txt, spacing=-40, fill=(0,0,0), font=f)
-        draw.text((x-7, y+7), new_txt, spacing=-40, fill=(0,0,0), font=f)
-        draw.text((x+7, y+7), new_txt, spacing=-40, fill=(0,0,0), font=f)
-    draw.text((x, y), new_txt, spacing=-40, fill=color, font=f)
-    # draw.multiline_text((55, -110), new_txt, spacing=-40, fill=color, font=f)
+    if color.upper() == "#FFF" or color == "#FFFFFF":
+        draw.multiline_text((x-7, y), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.multiline_text((x+7, y), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.multiline_text((x, y-7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.multiline_text((x, y+7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.multiline_text((x-7, y-7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.multiline_text((x+7, y-7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.multiline_text((x-7, y+7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+        draw.multiline_text((x+7, y+7), new_txt, spacing=-40, fill=(0,0,0), font=f)
+    draw.multiline_text((x, y), new_txt, spacing=-40, fill=color, font=f)
     resizedimg = img.resize((size, size), Image.ANTIALIAS)
-    return resizedimg
+    tmp_storage = io.BytesIO()
+    resizedimg.save(tmp_storage,"png")
+    img_byte = tmp_storage.getvalue()
+    tmp_storage.close()
+    return img_byte
 
 
 def make512(img):
@@ -51,7 +54,3 @@ def make512(img):
     icon512 = icon.resize((512, 512), Image.ANTIALIAS)
     return icon512
 
-
-if __name__ == "__main__":
-    img = createImg('あいうえおかき', size=512, color="#123456")
-    img.show()

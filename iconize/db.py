@@ -20,7 +20,7 @@ class Post(db.Model):
     date = db.Column(db.String, nullable=False)
     token = db.Column(db.String, nullable=False)
     icon = db.Column(db.LargeBinary, nullable=True)
-
+    ver = db.Column(db.Integer, nullable=False,default=0)
     def __repr__(self):
         return "<post iD:{},title:{}>".format(self.iD, self.title)
 
