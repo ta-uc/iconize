@@ -52,7 +52,7 @@ def sw(iD):
     path = current_app.root_path + "/static/service-worker.js"
     with open(path) as f:
         rawSw = f.read()
-    swjs = rawSw.replace("VERSION","'"+str(post.ver)+"'")
+    swjs = rawSw.replace("VERSION","'"+iD+"-"+str(post.ver)+"'")
     res.data = swjs
     fileName = "service-worker.js"
     res.headers['Content-Disposition'] = 'filename=' + fileName

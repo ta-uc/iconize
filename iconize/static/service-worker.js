@@ -1,6 +1,18 @@
 let CACHE_NAME = VERSION;
 self.addEventListener('install', e => {
+  self.skipWaiting();
   e.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+          cacheNames.map((cacheName) => {
+            // If cacheName(oldcache) includes CACHENAME (newcache)
+            if (cacheName.indexOf(CACHE_NAME.slice(0,32)) !== -1) {
+              // Delete old matched cache.
+              return caches.delete(cacheName);
+            }
+          })
+      );
+  }),
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll([
         './',
@@ -19,18 +31,6 @@ self.addEventListener('install', e => {
 });
 
 self.addEventListener('activate', e => {
-  let cacheWhitelist = [CACHE_NAME];
-  e.waitUntil(
-      caches.keys().then((cacheNames) => {
-          return Promise.all(
-              cacheNames.map((cacheName) => {
-                  if (cacheWhitelist.indexOf(cacheName) === -1) {
-                      return caches.delete(cacheName);
-                  }
-              })
-          );
-      })
-  );
 });
 
 
