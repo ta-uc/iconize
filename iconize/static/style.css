@@ -77,7 +77,7 @@ hr {
 }
 
 #input_token,
-token {
+#token {
     width: 70%;
     border-bottom: 1px solid rgb(126, 126, 126);
     padding-bottom: 0px;
@@ -127,6 +127,13 @@ token {
 #progressGet{
     width:100%;
     display: none;
+}
+#cpbtn{
+    width:25%;
+    text-align: center;
+    margin-left: 4%;
+    margin-bottom: 10px;
+    padding: 2px;
 }
 
 

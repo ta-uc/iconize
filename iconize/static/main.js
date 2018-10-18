@@ -135,10 +135,6 @@ let post = () => {
             setTimeout(() => {
                 window.scrollTo(0, document.body.scrollHeight);
             }, 10);
-            document.querySelector("#token").select();
-            setTimeout(() => {
-                document.execCommand("copy");
-            }, 10);
         }else{
             $("#err").append("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
         }
@@ -301,3 +297,7 @@ $("#input_color").change(function() {
 $("#input_author,#input_title,#input_date,#input_color,#wrap-editor").on("keypress click", function() {
     $(this).css("border", "none").tooltip("hide").tooltip("disable");
 });
+$("#cpbtn").click(()=>{
+    document.querySelector("#token").select();
+    document.execCommand("copy");
+})
