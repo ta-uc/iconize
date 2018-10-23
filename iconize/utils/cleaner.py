@@ -4,7 +4,7 @@ added_tags = ['br', 'div', 'u', 'span', 'p', 'h1', 'h2', 'h3', 'h4',
 added_attrbt = {'*': ['style', 'href', 'rel', 'src',
                       'data-filename', 'alt', 'background-color', 'class']}
 styles = ['background-color', 'color', 'font-family',
-          'width', 'height', 'src', 'text-align']
+          'width', 'height', 'src', 'text-align','margine-left']
 protocols = ['data', 'http', 'https']
 attbs = bleach.sanitizer.ALLOWED_ATTRIBUTES
 attbs.update(added_attrbt)
