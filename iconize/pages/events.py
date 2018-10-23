@@ -38,8 +38,11 @@ def create_post():
                     request.form['color'], request.form['date'], token)
             if "iconfile" in request.files:
                 saveFile(icon=request.files["iconfile"], name=iD)
-            return jsonify(returnValue)
-        except:
+            res = make_response(jsonify(returnValue))
+            res.set_cookie(iD,token)
+            return res
+        except Exception as e:
+            print(e)
             return "error"
     return render_template('/events/content.html', access_type="Create")
 
@@ -69,14 +72,15 @@ def edit_post(iD):
         return 'success'
 
     if request.method == 'GET':
-        if request.args.get('token') == '' or request.args.get('token') is None:
+        if (request.args.get('token') == '' or request.args.get('token') is None) and request.cookies.get(iD) is None:
             return render_template('events/content.html', auth='missing')
-        if request.args.get('token') != token:
+        elif request.args.get('token') != token and request.cookies.get(iD) != token:
             return render_template('events/content.html', auth='incorrect')
-        post = get_post(iD)
-        return render_template('events/content.html', access_type="Edit",
-                               author=post.author, auth='success', title=post.title,
-                               s_title=post.s_title, date=post.date, color=post.color)
+        else:
+            post = get_post(iD)
+            return render_template('events/content.html', access_type="Edit",
+                                author=post.author, auth='success', title=post.title,
+                                s_title=post.s_title, date=post.date, color=post.color)
 
 
 @bp.route('/<iD>/', methods=['GET'])
@@ -100,13 +104,16 @@ def delete(iD):
 
         token = token_data.token
 
-        if request.form["token"] == "" or request.form["token"] is None or token != request.form["token"]:
+        if (request.form["token"] == "" or request.form["token"] is None or token != request.form["token"]) \
+        and (request.cookies.get(iD) is None or request.cookies.get(iD) != token):
             return "error"
         try:
             delete_post(iD)
         except:
             return "error"
-        return "Success"
+        res = make_response("Success")
+        res.set_cookie(iD,expires=0)
+        return res
 
 @bp.route("/<iD>/offlineErr/")
 def offline(iD):
