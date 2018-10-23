@@ -130,15 +130,17 @@ let post = () => {
                 jump_post(iD);
             });
             $("#token").val(token)
-            $("#input_file,#post_button").attr("disabled", true);
+            $("#input_file,#post_button").css("visibility", "hidden");
             $("#msg").css("visibility", "visible");
             setTimeout(() => {
                 window.scrollTo(0, document.body.scrollHeight);
             }, 10);
         }else{
+            //server error
             $("#err").append("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
         }
     }).fail(() => {
+        //when connection failed.
         $("#err").append("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
     }).always(()=>{
         $("#progress").css("visibility", "hidden");

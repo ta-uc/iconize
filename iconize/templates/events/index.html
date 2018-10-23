@@ -6,7 +6,7 @@ List of pages
     <h1>The latest 10 posts</h1>
     <p> <a href="https://iconize.herokuapp.com/posts/a55369f36da61f9784bfdbae62235d2a/">使いかた - Admin</a></p>
     # for i in range(num)
-        <p> <a href="/posts/{{ posts[i]['iD'] }}">{{ posts[i]['title'] }} - {{ posts[i]['author'] }}</a></p>
+        <p> <a href="/posts/{{ posts[i]['iD'] }}">{{ posts[i]['title'] }} - {{ posts[i]['author'] }} - [{{ posts[i]['date'] }}]</a></p>
     # endfor
     <hr><p id="create_link"><a class="btn btn-primary" href="/posts/create/">Create page</a></p>
 # endblock

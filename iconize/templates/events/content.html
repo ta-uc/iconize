@@ -14,9 +14,9 @@
 # block content
     # if access_type == 'Edit' and auth == 'success' or access_type == 'Create':
         <form>
-            <input id="input_author" type="text" maxlength="10" placeholder="Author" value="{{ author }}"
+            <input id="input_author" type="text" maxlength="20" placeholder="Author" value="{{ author }}"
             data-toggle="tooltip" title='"Author" cannot be empty.' data-placement="bottom">
-            <input id="input_title" type="text" maxlength="30" placeholder="Title" value="{{ title }}"
+            <input id="input_title" type="text" maxlength="40" placeholder="Title" value="{{ title }}"
             data-toggle="tooltip" title='"Title" cannot be empty.' data-placement="bottom">
             <input maxlength="8" id="input_short_title" type="text" placeholder="String for icon." value="{{ s_title }}">
             date:<input id="input_date" type="date" value="{{ date }}"
