@@ -92,7 +92,6 @@ hr {
 #input_author,
 #author {
     font-size: 1.5em;
-    /* height: 20px; */
 }
 
 #input_title,
@@ -116,7 +115,8 @@ hr {
 }
 
 .r-button, 
-#create_link {
+#create_link,
+#badge {
     width:100%;
     text-align: right;
 }
@@ -135,5 +135,6 @@ hr {
     margin-bottom: 10px;
     padding: 2px;
 }
+
 
 

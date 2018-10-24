@@ -267,6 +267,11 @@ $(document).ready(() => {
         $("#input_color").css("background-color", color);
         $('[data-toggle="tooltip"]').tooltip().tooltip("disable");
     }
+    if (navigator.onLine){
+        $("#badge").html('<span class="label label-success">online</span>');
+    }else{
+        $("#badge").html('<span class="label label-default">offline</span>');
+    }
 });
 $("#post_button").click(post);
 $("#update_button").click(update);
@@ -303,3 +308,9 @@ $("#cpbtn").click(()=>{
     document.querySelector("#token").select();
     document.execCommand("copy");
 })
+window.addEventListener("online",() => {
+    $("#badge").html('<span class="label label-success">online</span>');
+});
+window.addEventListener("offline",() => {
+    $("#badge").html('<span class="label label-default">offline</span>');
+});
