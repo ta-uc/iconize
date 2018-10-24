@@ -79,12 +79,13 @@ def manifest(iD=None):
     title = post.title
     s_title = post.s_title
     color = post.color or "FFF"
+    bg_color = "#F2F2F2" if color in ("FFF","FFFFFF",) else "#000"
     json_data = {
         "name": title,
         "short_name": s_title,
         "theme_color": "#"+color,
-        "background_color": "#FFF",
-        "display": "standalone",
+        "background_color": bg_color,
+        "display": "fullscreen",
         "orientation": "portrait",
         "scope": "/posts/"+iD+"/",
         "start_url": "/posts/" + iD + "/",
