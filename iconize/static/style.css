@@ -116,10 +116,12 @@ hr {
 
 .r-button, 
 #create_link,
-#badge {
+#badge,
+#updated_date{
     width:100%;
     text-align: right;
 }
+
 #msg,#progress,#progress{
     width:100%;
     visibility: hidden;

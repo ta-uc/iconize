@@ -1,6 +1,6 @@
 from ..db import db, Post, init_db
 from flask import current_app as app, g
-
+from datetime import date
 
 def get_post(iD=None):
     return Post.query.filter(Post.iD == iD).first()
@@ -52,5 +52,6 @@ def mod_post(iD, author=None, html=None, title=None,
     post.date = date if date is not None else post.date
     post.icon = icon if icon is not None else post.icon
     post.ver += 1
+    post.updated_date = date.today()
     db.session.add(post)
     db.session.commit()

@@ -34,12 +34,12 @@ def create_post():
             iD = returnValue[0]
             token = returnValue[1]
             add_post(iD, request.form['author'], cleaned_html,
-                    title, s_title,
-                    request.form['color'], request.form['date'], token)
+                     title, s_title,
+                     request.form['color'], request.form['date'], token)
             if "iconfile" in request.files:
                 saveFile(icon=request.files["iconfile"], name=iD)
             res = make_response(jsonify(returnValue))
-            res.set_cookie(iD,token)
+            res.set_cookie(iD, token)
             return res
         except Exception as e:
             print(e)
@@ -79,8 +79,8 @@ def edit_post(iD):
         else:
             post = get_post(iD)
             return render_template('events/content.html', access_type="Edit",
-                                author=post.author, auth='success', title=post.title,
-                                s_title=post.s_title, date=post.date, color=post.color)
+                                   author=post.author, auth='success', title=post.title,
+                                   s_title=post.s_title, date=post.date, color=post.color)
 
 
 @bp.route('/<iD>/', methods=['GET'])
@@ -89,7 +89,8 @@ def show_post(iD=None):
     if post is None:
         return render_template("events/error.html")
     return render_template('/events/show_post.html', title=post.title, iD=iD,
-                           date=post.date, author=post.author, s_title=post.s_title, color=post.color)
+                           date=post.date, author=post.author, s_title=post.s_title,
+                           updated_date=str(post.updated_date), color=post.color)
 
 
 @bp.route("/<iD>/delete/", methods=["GET", "POST"])
@@ -105,15 +106,16 @@ def delete(iD):
         token = token_data.token
 
         if (request.form["token"] == "" or request.form["token"] is None or token != request.form["token"]) \
-        and (request.cookies.get(iD) is None or request.cookies.get(iD) != token):
+                and (request.cookies.get(iD) is None or request.cookies.get(iD) != token):
             return "error"
         try:
             delete_post(iD)
         except:
             return "error"
         res = make_response("Success")
-        res.set_cookie(iD,expires=0)
+        res.set_cookie(iD, expires=0)
         return res
+
 
 @bp.route("/<iD>/offlineErr/")
 def offline(iD):

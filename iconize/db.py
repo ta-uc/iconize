@@ -10,8 +10,8 @@ class Post(db.Model):
     # pylint: disable=E1101
     __tableneme__ = "post"
     iD = db.Column(db.String, primary_key=True)
-    created_date = db.Column(db.DateTime(
-        timezone=True), server_default=func.now())
+    created_date = db.Column(db.DateTime(timezone=False), server_default=func.now())
+    updated_date = db.Column(db.String, server_default=func.current_date())
     author = db.Column(db.String, nullable=False)
     html = db.Column(db.LargeBinary, nullable=False)
     title = db.Column(db.String, nullable=False)
