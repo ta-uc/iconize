@@ -60,7 +60,7 @@ def sw(iD):
     return res
 
 @bp.route('/posts/<iD>/<path:path>')
-def return_stylesheet(iD,path):
+def return_staticfiles(iD,path):
     path = current_app.root_path + "/" + path
     try:
         return send_file(path)
@@ -79,7 +79,7 @@ def manifest(iD=None):
     title = post.title
     s_title = post.s_title
     color = post.color or "FFF"
-    bg_color = "#F2F2F2" if color in ("FFF","FFFFFF",) else "#000"
+    bg_color = "#F2F2F2" if color in ("FFF","FFFFFF",) else "#FFF"
     json_data = {
         "name": title,
         "short_name": s_title,

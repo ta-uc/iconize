@@ -96,7 +96,7 @@ let getContent = () => {
         dataType: "html",
         contentType: "text/html"
     }).fail(() => {
-        $("#editcontent,#content").append("<p class='alert alert-warning'>Failed to load the content.</p>");
+        $("#editcontent,#content").html("<p class='alert alert-warning'>Failed to load the content.</p>");
     }).done(d => {
         let str = window.location.href;
         if (str.indexOf("edit") != -1) {
@@ -137,11 +137,11 @@ let post = () => {
             }, 10);
         }else{
             //server error
-            $("#err").append("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
+            $("#err").html("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
         }
     }).fail(() => {
         //when connection failed.
-        $("#err").append("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
+        $("#err").html("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
     }).always(()=>{
         $("#progress").css("visibility", "hidden");
     });
@@ -168,10 +168,10 @@ let update = () => {
             let iD = getId();
             window.location.href = "/posts/" + iD;
         }else{
-            $("#err").append("<p class='alert alert-warning'>Failed to update. Try later.</p>")
+            $("#err").html("<p class='alert alert-warning'>Failed to update. Try later.</p>")
         }
     }).fail(()=>{
-        $("#err").append("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
+        $("#err").html("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
     }).always(()=>{
         $("#progress").css("visibility", "hidden");
     });
@@ -186,7 +186,7 @@ let deletePost = () => {
             if(r !== "error"){
                 alert(r);
             }else{
-                $("#err").append("<p class='alert alert-warning'>Failed to delete. Try later.</p>")
+                $("#err").html("<p class='alert alert-warning'>Failed to delete. Try later.</p>")
                 return 1;
             }
     });
