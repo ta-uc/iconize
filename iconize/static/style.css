@@ -118,7 +118,8 @@ hr,
 .r-button, 
 #create_link,
 #badge,
-#updated_date{
+#updated_date
+#created_date{
     width:100%;
     text-align: right;
 }
