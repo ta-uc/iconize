@@ -1,4 +1,5 @@
 from flask import Flask,redirect,url_for,render_template
+from flask_sslify import SSLify
 import os
 def create_app():
     #pylint: disable=W0612
@@ -29,5 +30,7 @@ def create_app():
     @app.errorhandler(404)
     def page_not_found(err):
         return render_template('/err/404.html'), 404
+
+    sslify = SSLify(app)
 
     return app
