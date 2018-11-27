@@ -3,9 +3,9 @@ from flask import (
 )
 import io
 import os
-from ..utils.img import createImg
-from ..utils.dbOpe import get_post
-from ..db import Post, db
+from iconize.utils.img import createImg
+from iconize.utils.dbOpe import get_post
+from iconize.db import Post, db
 bp = Blueprint('staticFiles', __name__,)
 
 

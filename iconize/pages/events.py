@@ -2,12 +2,12 @@ from flask import (
     make_response, Blueprint, flash, g, redirect,
     render_template, request, url_for, jsonify
 )
-from ..db import Post
-from ..utils.dbOpe import get_post, delete_post, get_post_list, add_post, mod_post
-from ..utils.cleaner import cl
-from ..utils.dataHash import getHash
-from ..utils.img import make512
-from ..utils.fileOpe import saveFile, deleteFile
+from iconize.db import Post
+from iconize.utils.dbOpe import get_post, delete_post, get_post_list, add_post, mod_post
+from iconize.utils.cleaner import cl
+from iconize.utils.dataHash import getHash
+from iconize.utils.img import make512
+from iconize.utils.fileOpe import saveFile, deleteFile
 import os
 
 bp = Blueprint("events", __name__, url_prefix="/posts/")

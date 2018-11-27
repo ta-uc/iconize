@@ -2,7 +2,7 @@ import os
 import io
 from .img import make512
 from .dbOpe import get_post,mod_post
-from ..db import Post,db
+from iconize.db import Post,db
 
 def saveFile(icon=None,name=None):
     if icon.filename.rsplit('.', 1)[1].lower() == 'png':

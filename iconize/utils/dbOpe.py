@@ -1,4 +1,4 @@
-from ..db import db, Post, init_db
+from iconize.db import db, Post, init_db
 from flask import current_app as app, g
 import datetime
 def get_post(iD=None):
