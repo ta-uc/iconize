@@ -1,6 +1,10 @@
-from flask import Flask,redirect,url_for,render_template
+from flask import Flask,redirect,url_for,render_template,request
 from flask_sslify import SSLify
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 import os
+
+
 def create_app():
     #pylint: disable=W0612
     app = Flask(__name__)
@@ -32,5 +36,20 @@ def create_app():
         return render_template('/err/404.html'), 404
 
     sslify = SSLify(app)
+
+    class icnzmodelview(ModelView):
+
+        def is_accessible(self):
+            if request.args.get("K") != os.getenv("ICZ_ADMINKEY"):
+                return False
+            else:
+                return True
+
+        can_create = False
+        can_edit = False
+        column_exclude_list = ["icon","html"]
+        
+    admin = Admin(app, name="iconize", template_mode="bootstrap3")
+    admin.add_view(icnzmodelview(db.Post,db.db.session))
 
     return app
