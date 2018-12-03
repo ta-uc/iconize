@@ -3,7 +3,7 @@ from flask_sslify import SSLify
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 import os
-
+from werkzeug.contrib.fixers import ProxyFix
 
 def create_app():
     #pylint: disable=W0612
@@ -35,8 +35,6 @@ def create_app():
     def page_not_found(err):
         return render_template('/err/404.html'), 404
 
-    sslify = SSLify(app)
-
     class icnzmodelview(ModelView):
 
         def is_accessible(self):
@@ -50,6 +48,8 @@ def create_app():
         can_delete = False
         column_list=["iD","token","author","title","created_date","updated_date"]
         
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+    sslify = SSLify(app)
     admin = Admin(app, name="Need Password", template_mode="bootstrap3")
     admin.add_view(icnzmodelview(db.Post,db.db.session))
 
