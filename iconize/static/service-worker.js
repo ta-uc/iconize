@@ -23,6 +23,7 @@ self.addEventListener('install', e => {
         './static/bootstrap.css',
         './static/main.js',
         './static/pwacompat.min.js',
+        './static/jquery.js',
         './128.png',
         './256.png',
         './512.png'
