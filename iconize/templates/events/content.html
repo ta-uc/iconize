@@ -18,7 +18,7 @@
             data-toggle="tooltip" title='"Author" cannot be empty.' data-placement="bottom">
             <input id="input_title" type="text" maxlength="40" placeholder="Title" value="{{ title }}"
             data-toggle="tooltip" title='"Title" cannot be empty.' data-placement="bottom">
-            <input maxlength="8" id="input_short_title" type="text" placeholder="String for icon." value="{{ s_title }}">
+            <input maxlength="8" id="input_short_title" type="text" placeholder="Text for icon." value="{{ s_title }}">
             Date:<input id="input_date" type="date" value="{{ date }}"
             data-toggle="tooltip" title='"Date" cannot be empty.' data-placement="bottom">
         </form>
@@ -44,7 +44,7 @@
                 <option value="#FF00FF">Magenta</option>
                 <option value="#FFC0CB">Pink</option>
         </datalist>
-        <p>Icon image file (Only png ~512kb) <input id="input_file" type="file" accept="image/png"></p>
+        <p>Icon image file (PNG only ~512kb) <input id="input_file" type="file" accept="image/png"></p>
         # if access_type == 'Create':
             <p class="r-button"><a class="btn btn-primary" id="post_button" href="javascript:void(0);">POST</a></p>
         # endif
@@ -77,5 +77,7 @@
 <script defer src="{{ url_for('static',filename='popper.min.js') }}"></script>
 <script defer src="{{ url_for('static',filename='bootstrap.js') }}"></script>
 <script defer src="{{ url_for('static',filename='summernote.js') }}"></script>
+<script defer src="{{ url_for('static',filename='exif.js') }}"></script>
+<script defer src="{{ url_for('static',filename='summernote-ext-resized-data-image.js') }}"></script>
 <script defer src="{{ url_for('static',filename='main.js') }}"></script>
 # endblock
