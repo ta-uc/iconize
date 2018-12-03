@@ -107,7 +107,7 @@ let getContent = () => {
         } else {
             $("#editcontent,#content").append(d);
         }
-    }).always(()=>{
+    }).always(() => {
         $("#progressGet").css("display", "none");
     });
 }
@@ -123,7 +123,7 @@ let post = () => {
         processData: false,
         contentType: false
     }).done(r => {
-        if (r!=="error"){
+        if (r !== "error") {
             let iD = String(r[0]);
             let token = String(r[1]);
             $("#edit_link").click(() => {
@@ -138,14 +138,14 @@ let post = () => {
             setTimeout(() => {
                 window.scrollTo(0, document.body.scrollHeight);
             }, 10);
-        }else{
+        } else {
             //server error
             $("#err").html("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
         }
     }).fail(() => {
         //when connection failed.
         $("#err").html("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
-    }).always(()=>{
+    }).always(() => {
         $("#progress").css("visibility", "hidden");
     });
 }
@@ -161,7 +161,7 @@ let update = () => {
         processData: false,
         contentType: false
     }).done(r => {
-        if(r !=="error"){
+        if (r !== "error") {
             alert(r);
             $("#progress").css("visibility", "hidden");
             $("#update_button").attr("disabled", true);
@@ -170,31 +170,33 @@ let update = () => {
             }, 10);
             let iD = getId();
             window.location.href = "/posts/" + iD;
-        }else{
+        } else {
             $("#err").html("<p class='alert alert-warning'>Failed to update. Try later.</p>")
         }
-    }).fail(()=>{
+    }).fail(() => {
         $("#err").html("<p class='alert alert-warning'>Failed to upload. Try later.</p>")
-    }).always(()=>{
+    }).always(() => {
         $("#progress").css("visibility", "hidden");
     });
 }
 let deletePost = () => {
-    let iD = getId();
-    let token = getParam("token");
-    let data = {
-        "token": token
-    };
-    $.post("/posts/" + iD + "/delete/", data).done(r => {
-            if(r !== "error"){
+    if (confirm("This post will be deleted from the server.")) {
+        let iD = getId();
+        let token = getParam("token");
+        let data = {
+            "token": token
+        };
+        $.post("/posts/" + iD + "/delete/", data).done(r => {
+            if (r !== "error") {
                 alert(r);
-            }else{
+            } else {
                 $("#err").html("<p class='alert alert-warning'>Failed to delete. Try later.</p>")
                 return 1;
             }
-    });
-    window.location.href = "/posts/";
-    $("#delete_button").attr("disabled", true);
+        });
+        window.location.href = "/posts/";
+        $("#delete_button").attr("disabled", true);
+    }
 }
 let sendToken = () => {
     let iD = getId();
@@ -247,32 +249,32 @@ let jump_post = iD => {
 $(document).ready(() => {
     let str = window.location.href;
     if (str.indexOf("create") === -1) { // When the page is loaded as edit mode or view.
-        getContent();                   // Fetch content and activate summernote.
-    }else{                              // When the page is loaded as create mode.
+        getContent(); // Fetch content and activate summernote.
+    } else { // When the page is loaded as create mode.
         activateSummernote();
     };
     // When the page is loaded as view. Register the sw for each post.
     if ('serviceWorker' in navigator && (str.indexOf("create") === -1 &&
-        str.indexOf("edit") === -1)) {
+            str.indexOf("edit") === -1)) {
         const iD = getId();
         navigator.serviceWorker
-            .register("/posts/"+iD+"/service-worker.js", {
-                scope: "/posts/"+iD+"/"
+            .register("/posts/" + iD + "/service-worker.js", {
+                scope: "/posts/" + iD + "/"
             })
             .then(() => {
                 console.log('Service Worker Registered');
             });
     }
     // When the page is loaded as create mode or edit mode.
-    if (str.indexOf("create") !== -1 || str.indexOf("edit") !== -1){
+    if (str.indexOf("create") !== -1 || str.indexOf("edit") !== -1) {
         $("input:first").focus();
         let color = $("#input_color").val();
         $("#input_color").css("background-color", color);
         $('[data-toggle="tooltip"]').tooltip().tooltip("disable");
     }
-    if (navigator.onLine){
+    if (navigator.onLine) {
         $("#badge").html('<span class="label label-success">online</span>');
-    }else{
+    } else {
         $("#badge").html('<span class="label label-default">offline</span>');
     }
 });
@@ -297,23 +299,23 @@ $("#input_date").change(() => {
         focus: true
     });
 });
-$("#input_color").click(function() {
+$("#input_color").click(function () {
     $(this).val("");
     $(this).css("background-color", "#FFF");
 });
-$("#input_color").change(function() {
+$("#input_color").change(function () {
     $(this).css("background-color", $(this).val());
 });
-$("#input_author,#input_title,#input_date,#input_color,#wrap-editor").on("keypress click", function() {
+$("#input_author,#input_title,#input_date,#input_color,#wrap-editor").on("keypress click", function () {
     $(this).css("border", "none").tooltip("hide").tooltip("disable");
 });
-$("#cpbtn").click(()=>{
+$("#cpbtn").click(() => {
     document.querySelector("#token").select();
     document.execCommand("copy");
 })
-window.addEventListener("online",() => {
+window.addEventListener("online", () => {
     $("#badge").html('<span class="label label-success">online</span>');
 });
-window.addEventListener("offline",() => {
+window.addEventListener("offline", () => {
     $("#badge").html('<span class="label label-default">offline</span>');
 });
