@@ -47,9 +47,10 @@ def create_app():
 
         can_create = False
         can_edit = False
-        column_exclude_list = ["icon","html"]
+        can_delete = False
+        column_list=["iD","token","created_date","updated_date","author"]
         
-    admin = Admin(app, name="iconize", template_mode="bootstrap3")
+    admin = Admin(app, name="Need Password", template_mode="bootstrap3")
     admin.add_view(icnzmodelview(db.Post,db.db.session))
 
     return app
