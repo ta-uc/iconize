@@ -48,7 +48,7 @@ def create_app():
         can_create = False
         can_edit = False
         can_delete = False
-        column_list=["iD","token","created_date","updated_date","author"]
+        column_list=["iD","token","author","title","created_date","updated_date"]
         
     admin = Admin(app, name="Need Password", template_mode="bootstrap3")
     admin.add_view(icnzmodelview(db.Post,db.db.session))
