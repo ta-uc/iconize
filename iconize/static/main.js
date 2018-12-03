@@ -69,8 +69,11 @@ let activateSummernote = html => {
             ['view', ['fullscreen', 'codeview']],
             ['help', ['help']]
         ],
-        maximumImageFileSize: 524288 * 2, //1MB
+        // maximumImageFileSize: 524288 * 2, //1MB
         placeholder: "Edit here",
+        callbacks: {
+            onImageUpload: summernoteOnImageUpload,
+        },
     });
 }
 let xhrSetting = () => {
