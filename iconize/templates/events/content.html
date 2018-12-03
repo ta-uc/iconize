@@ -19,7 +19,7 @@
             <input id="input_title" type="text" maxlength="40" placeholder="Title" value="{{ title }}"
             data-toggle="tooltip" title='"Title" cannot be empty.' data-placement="bottom">
             <input maxlength="8" id="input_short_title" type="text" placeholder="String for icon." value="{{ s_title }}">
-            date:<input id="input_date" type="date" value="{{ date }}"
+            Date:<input id="input_date" type="date" value="{{ date }}"
             data-toggle="tooltip" title='"Date" cannot be empty.' data-placement="bottom">
         </form>
         <progress id="progressGet"></progress>
@@ -59,7 +59,7 @@
             <p class="alert alert-success">Created the page successfully!</p>
             <p class="r-button"><a class="btn btn-primary" id="jump_post" href="javascript:void(0);">View the page</a></p>
             <p class="r-button"><a class="btn btn-primary" id="edit_link" href="javascript:void(0);" >Edit the page</a></p>
-            <p>This is the token for your page:</p>
+            <p>Token - Required for editing:</p>
             <input id="token"><a id="cpbtn" class="btn btn-primary">COPY</a>
         </div>
     # endif
