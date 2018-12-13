@@ -8,6 +8,7 @@ from iconize.utils.dbOpe import get_post
 from iconize.db import Post, db
 bp = Blueprint('staticFiles', __name__,)
 
+import gzip
 
 @bp.route('/posts/<iD>/content/', methods=['GET', 'POST'])
 def give_content(iD):
@@ -15,7 +16,9 @@ def give_content(iD):
     if post is None:
         return ""
     res = make_response()
-    res.data = post.html
+    # res.data = post.html
+    res.data = gzip.compress(post.html)
+    res.headers["Content-Encoding"] = "gzip"
     res.headers["Content-Type"] = "text/html"
     return res
 
@@ -62,7 +65,19 @@ def sw(iD):
 @bp.route('/posts/<iD>/<path:path>')
 def return_staticfiles(iD,path):
     path = current_app.root_path + "/" + path
+    if ".js" in path:
+        type = "application/javascript"
+    elif ".css" in path:
+        type = "text/css"
     try:
+        with open(path,"rb") as f:
+            data = f.read()
+            data_compressed = gzip.compress(data)
+            res = make_response()
+            res.data = data_compressed
+            res.headers["Content-Encoding"] = "gzip"
+            res.headers["Content-Type"] = type
+            return res
         return send_file(path)
     except:
         return abort(404)
