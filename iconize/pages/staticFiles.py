@@ -63,12 +63,16 @@ def sw(iD):
     return res
 
 @bp.route('/posts/<iD>/<path:path>')
-def return_staticfiles(iD,path):
+@bp.route('/ce/<path:path>')
+@bp.route('/base/<path:path>')
+def return_staticfiles(iD=None,path="/"):
     path = current_app.root_path + "/" + path
     if ".js" in path:
         type = "application/javascript"
     elif ".css" in path:
         type = "text/css"
+    else:
+        return send_file(path)
     try:
         with open(path,"rb") as f:
             data = f.read()
@@ -77,8 +81,8 @@ def return_staticfiles(iD,path):
             res.data = data_compressed
             res.headers["Content-Encoding"] = "gzip"
             res.headers["Content-Type"] = type
+            print("gzipped")
             return res
-        return send_file(path)
     except:
         return abort(404)
 

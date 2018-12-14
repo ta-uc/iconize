@@ -1,8 +1,8 @@
 # extends 'base.html'
 # block head:
-    <link href="{{ url_for('static',filename='bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static',filename='summernote.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static',filename='style.css') }}" rel="stylesheet">
+    <link href="/ce/static/bootstrap.css" rel="stylesheet">
+    <link href="/ce/static/summernote.css" rel="stylesheet">
+    <link href="/ce/static/style.css" rel="stylesheet">
 # endblock
 # block title:
     # if auth == 'missing' or auth == 'incorrect':
@@ -73,10 +73,10 @@
     # endif
 # endblock
 # block script:
-<script defer src="{{ url_for('static',filename='jquery.js') }}"></script>
-<script defer src="{{ url_for('static',filename='popper.min.js') }}"></script>
-<script defer src="{{ url_for('static',filename='bootstrap.js') }}"></script>
-<script defer src="{{ url_for('static',filename='summernote.js') }}"></script>
-<script defer src="{{ url_for('static',filename='resize.js') }}"></script>
-<script defer src="{{ url_for('static',filename='main.js') }}"></script>
+<script defer src="/ce/static/jquery.js"></script>
+<script defer src="/ce/static/popper.min.js"></script>
+<script defer src="/ce/static/bootstrap.js"></script>
+<script defer src="/ce/static/summernote.js"></script>
+<script defer src="/ce/static/resize.js"></script>
+<script defer src="/ce/static/main.js"></script>
 # endblock
