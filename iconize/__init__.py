@@ -38,7 +38,7 @@ def create_app():
     class icnzmodelview(ModelView):
 
         def is_accessible(self):
-            if request.args.get("K") != os.getenv("ICZ_ADMINKEY"):
+            if request.args.get("K") != os.getenv("ICZ_ADMINKEY") or os.getenv("ICZ_ADMINKEY") is None:
                 return False
             else:
                 return True
