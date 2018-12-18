@@ -81,7 +81,6 @@ def return_staticfiles(iD=None,path="/"):
             res.data = data_compressed
             res.headers["Content-Encoding"] = "gzip"
             res.headers["Content-Type"] = type
-            print("gzipped")
             return res
     except:
         return abort(404)

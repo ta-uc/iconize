@@ -6,7 +6,6 @@ from iconize.db import Post
 from iconize.utils.dbOpe import get_post, delete_post, get_post_list, add_post, mod_post
 from iconize.utils.cleaner import cl
 from iconize.utils.dataHash import getHash
-from iconize.utils.img import make512
 from iconize.utils.fileOpe import saveFile, deleteFile
 import os
 
