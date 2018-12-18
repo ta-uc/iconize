@@ -273,9 +273,9 @@ $(document).ready(() => {
         $('[data-toggle="tooltip"]').tooltip().tooltip("disable");
     }
     if (navigator.onLine) {
-        $("#badge").html('<span class="label label-success">online</span>');
+        $("#badge").html('<span class="badge badge-success">online</span>');
     } else {
-        $("#badge").html('<span class="label label-default">offline</span>');
+        $("#badge").html('<span class="badge badge-default">offline</span>');
     }
 });
 $("#post_button").click(post);
@@ -314,8 +314,8 @@ $("#cpbtn").click(() => {
     document.execCommand("copy");
 })
 window.addEventListener("online", () => {
-    $("#badge").html('<span class="label label-success">online</span>');
+    $("#badge").html('<span class="badge badge-success">online</span>');
 });
 window.addEventListener("offline", () => {
-    $("#badge").html('<span class="label label-default">offline</span>');
+    $("#badge").html('<span class="badge badge-secondary">offline</span>');
 });
