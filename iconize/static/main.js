@@ -261,9 +261,13 @@ $(document).ready(() => {
             .register("/posts/" + iD + "/service-worker.js", {
                 scope: "/posts/" + iD + "/"
             })
-            .then(() => {
-                console.log('Service Worker Registered');
-            });
+            .then( sw => {
+                sw.onupdatefound = function() {
+                  console.log('Found update');
+                  if(confirm("更新されました。リロードしますか？\nFound updates. Reload the page?"))
+                  location.reload();
+                }
+              })
     }
     // When the page is loaded as create mode or edit mode.
     if (str.indexOf("create") !== -1 || str.indexOf("edit") !== -1) {
