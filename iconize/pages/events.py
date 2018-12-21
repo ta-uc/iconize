@@ -22,7 +22,7 @@ def list_posts():
 def show_post(iD=None):
     post = get_post(iD)
     if post is None:
-        return render_template("events/error.html")
+        return render_template("/err/error.html")
     return render_template("/events/show_post.html", title=post.title, iD=iD,
                            date=post.date, author=post.author, s_title=post.s_title,
                            updated_date=str(post.updated_date),created_date=str(post.created_date)[:10], color=post.color)
