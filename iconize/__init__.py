@@ -15,7 +15,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 32
     app.config["PREFERRED_URL_SCHEME"] = "https"
-    app.config["SECRET_KEY"]=str(os.urandom(20))
+    app.config["SECRET_KEY"]=os.getenv("SECRET",str(os.urandom(20)))
     app.jinja_env.line_statement_prefix='#'
 
     from .pages import events
