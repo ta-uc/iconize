@@ -261,13 +261,16 @@ $(document).ready(() => {
             .register("/posts/" + iD + "/service-worker.js", {
                 scope: "/posts/" + iD + "/"
             })
-            .then( sw => {
-                sw.onupdatefound = function() {
-                  console.log('Found update');
-                  if(confirm("更新されました。リロードしますか？\nFound updates. Reload the page?"))
-                  location.reload();
+            .then(sw => {
+                sw.onupdatefound = function () {
+                    let v = document.cookie;
+                    if (v.indexOf(iD+"visited") !== -1) {
+                        console.log('Found update');
+                        if (confirm("更新されました。リロードしますか？\nFound updates. Reload the page?"))
+                            location.reload();
+                    }
                 }
-              })
+            })
     }
     // When the page is loaded as create mode or edit mode.
     if (str.indexOf("create") !== -1 || str.indexOf("edit") !== -1) {

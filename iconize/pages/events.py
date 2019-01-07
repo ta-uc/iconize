@@ -11,6 +11,7 @@ import os
 
 bp = Blueprint("events", __name__, url_prefix="/posts/")
 
+
 @bp.route("/", methods=["GET"])
 def list_posts():
     num = 10
@@ -18,14 +19,22 @@ def list_posts():
     num_of_posts = list_of_posts.count()
     return render_template("/events/index.html", posts=list_of_posts, num=num_of_posts)
 
+
 @bp.route("/<iD>/", methods=["GET"])
 def show_post(iD=None):
     post = get_post(iD)
     if post is None:
         return render_template("/err/error.html")
-    return render_template("/events/show_post.html", title=post.title, iD=iD,
-                           date=post.date, author=post.author, s_title=post.s_title,
-                           updated_date=str(post.updated_date),created_date=str(post.created_date)[:10], color=post.color)
+    res = make_response(render_template("/events/show_post.html", title=post.title, iD=iD,
+                                  date=post.date, author=post.author, s_title=post.s_title,
+                                  updated_date=str(post.updated_date), created_date=str(post.created_date)[:10], color=post.color)
+                  )
+    if(request.cookies.get(iD+"view")):
+        print(request.cookies.get(iD+"view"))
+        res.set_cookie(iD+"visited","1")
+    res.set_cookie(iD+"view","1")
+    return res
+
 
 @bp.route("/create/", methods=["GET", "POST"])
 def create_post():
@@ -67,7 +76,7 @@ def edit_post(iD):
         token = token_data.token
         if (request.form["token"] == "" or request.form["token"] is None or token != request.form["token"]) \
                 and (request.cookies.get(iD) is None or request.cookies.get(iD) != token):
-                return "error"
+            return "error"
         try:
             title = request.form["title"]
             s_title = request.form["s_title"]
