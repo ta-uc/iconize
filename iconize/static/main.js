@@ -1,7 +1,7 @@
 "use strict";
 let downKeyCode = null;
-let getParam = (name, url) => {
-    url = location.search;
+let getParam = (name) => {
+    let url = location.search;
     name = name.replace(/[\[\]]/g, "\\$&");
     let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
@@ -282,7 +282,7 @@ $(document).ready(() => {
     if (navigator.onLine) {
         $("#badge").html('<span class="badge badge-success">online</span>');
     } else {
-        $("#badge").html('<span class="badge badge-default">offline</span>');
+        $("#badge").html('<span class="badge badge-secondary">offline</span>');
     }
 });
 $("#post_button").click(post);
