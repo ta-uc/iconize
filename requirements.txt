@@ -1,8 +1,8 @@
-Flask==1.0.2
-itsdangerous==0.24
-Jinja2==2.10
-MarkupSafe==1.0
-Werkzeug==0.15.3
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+Werkzeug
 gunicorn
 bleach
 pillow
